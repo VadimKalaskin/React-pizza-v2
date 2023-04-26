@@ -1,13 +1,24 @@
 import React from 'react';
+import Axios from 'axios';
 import './scss/app.scss';
+
 import Header from './components/Header/Header';
 import Categories from './components/Categories/Categories';
 import Sort from './components/Sort/Sort';
 import PizzaBlock from './components/PizzaBlock/PizzaBlock';
 
-import pizzas from './assets/pizzas.json';
+// https://642c3132208dfe25472a75cf.mockapi.io/items Для корзины
+// https://642c3132208dfe25472a75cf.mockapi.io/pizzas Пиццы
 
 function App() {
+  const [pizzas, setPizzas] = React.useState([]);
+
+  React.useEffect(() => {
+    Axios.get('https://642c3132208dfe25472a75cf.mockapi.io/pizzas').then((res) =>
+      setPizzas(res.data),
+    );
+  }, []);
+
   return (
     <div className="wrapper">
       <Header />

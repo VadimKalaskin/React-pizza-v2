@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
+export default function PizzaBlock({ title, price, imageUrl, sizes, types, rating }) {
   const [pizzaCount, setPizzaCount] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const [activeType, setActiveType] = React.useState(0);

@@ -11,25 +11,39 @@ export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const [categoryId, setCategoryId] = React.useState(0);
-  const [sortType, setSortType] = React.useState(0);
+  const [sortType, setSortType] = React.useState({
+    name: 'популярности',
+    sortProperty: 'rating',
+  });
 
   React.useEffect(() => {
-    Axios.get('https://642c3132208dfe25472a75cf.mockapi.io/pizzas').then((res) => {
+    setIsLoading(true);
+    Axios.get(
+      `https://642c3132208dfe25472a75cf.mockapi.io/pizzas?${
+        categoryId > 0 ? `category=${categoryId}` : ''
+      }&sortBy=${sortType.sortProperty}&order=desc`,
+    ).then((res) => {
       setPizzas(res.data);
       setIsLoading(false);
     });
-  }, []);
+    window.scrollTo(0, 0);
+  }, [categoryId, sortType]);
 
   return (
     <>
       <div className="content__top">
         <Categories
           value={categoryId}
-          onClickCategory={(id) => {
-            setCategoryId(id);
+          onChangeCategory={(i) => {
+            setCategoryId(i);
           }}
         />
-        <Sort />
+        <Sort
+          value={sortType}
+          onChangeSort={(i) => {
+            setSortType(i);
+          }}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

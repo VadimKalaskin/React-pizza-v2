@@ -5,29 +5,37 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
+import Pagination from '../components/Pagination';
 
-export default function Home() {
+export default function Home({ searchValue }) {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const [categoryId, setCategoryId] = React.useState(0);
   const [sortType, setSortType] = React.useState({
-    name: 'популярности',
+    name: 'популярности(DESC)',
     sortProperty: 'rating',
   });
+
+  const sortBy = sortType.sortProperty.replace('-', '');
+  const orderBy = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+  const category = categoryId > 0 ? `category=${categoryId}` : '';
+  const searchBy = searchValue ? `search=${searchValue}` : '';
 
   React.useEffect(() => {
     setIsLoading(true);
     Axios.get(
-      `https://642c3132208dfe25472a75cf.mockapi.io/pizzas?${
-        categoryId > 0 ? `category=${categoryId}` : ''
-      }&sortBy=${sortType.sortProperty}&order=desc`,
+      `https://642c3132208dfe25472a75cf.mockapi.io/pizzas?limit=4&page=${currentPage}${category}&sortBy=${sortBy}&order=${orderBy}&${searchBy}`,
     ).then((res) => {
       setPizzas(res.data);
       setIsLoading(false);
     });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue, currentPage]);
+
+  const itemsToShow = pizzas.map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+  const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
   return (
     <>
@@ -46,11 +54,8 @@ export default function Home() {
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : pizzas.map((obj) => <PizzaBlock {...obj} key={obj.id} />)}
-      </div>
+      <div className="content__items">{isLoading ? skeletons : itemsToShow}</div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </>
   );
 }

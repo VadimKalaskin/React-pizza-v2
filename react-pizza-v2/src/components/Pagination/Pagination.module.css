@@ -1,0 +1,35 @@
+.root {
+  margin: 50px auto;
+}
+.root :global li {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #fe5f1e;
+  border-radius: 30px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.root :global li a {
+  display: inline-block;
+  line-height: 40px;
+  padding: 10px;
+}
+.root :global li.selected {
+  background-color: #ff4800;
+}
+.root :global li.selected a {
+  color: #fff;
+}
+.root :global li.disabled {
+  opacity: 0.3;
+  border: 1px solid #000000;
+}
+.root :global li:not(.disabled):hover {
+  background-color: #ff4800;
+}
+.root :global li:not(.disabled):hover a {
+  color: #fff;
+}/*# sourceMappingURL=Pagination.module.css.map */

@@ -20,7 +20,9 @@ export default function Search() {
         value={searchValue}
         placeholder="Поиск пиццы..."
         className={styles.input}
-        onChange={(event) => setSearchValue(event.target.value)}
+        onChange={(event) => {
+          setSearchValue(event.target.value);
+        }}
       />
       {searchValue && (
         <svg

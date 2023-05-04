@@ -6,8 +6,9 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
 
-export default function Home({ searchValue }) {
+export default function Home() {
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -17,6 +18,7 @@ export default function Home({ searchValue }) {
     name: 'популярности(DESC)',
     sortProperty: 'rating',
   });
+  const { searchValue } = React.useContext(SearchContext);
 
   const sortBy = sortType.sortProperty.replace('-', '');
   const orderBy = sortType.sortProperty.includes('-') ? 'asc' : 'desc';

@@ -28,7 +28,7 @@ export default function Home() {
   React.useEffect(() => {
     setIsLoading(true);
     Axios.get(
-      `https://642c3132208dfe25472a75cf.mockapi.io/pizzas?limit=4&page=${currentPage}${category}&sortBy=${sortBy}&order=${orderBy}&${searchBy}`,
+      `https://642c3132208dfe25472a75cf.mockapi.io/pizzas?limit=8&page=${currentPage}&${category}&sortBy=${sortBy}&order=${orderBy}&${searchBy}`,
     ).then((res) => {
       setPizzas(res.data);
       setIsLoading(false);

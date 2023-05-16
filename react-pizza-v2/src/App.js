@@ -8,9 +8,6 @@ import NotFound from '../src/pages/NotFound';
 import './scss/app.scss';
 import Header from './components/Header';
 
-// https://642c3132208dfe25472a75cf.mockapi.io/items Для корзины
-// https://642c3132208dfe25472a75cf.mockapi.io/pizzas Пиццы
-
 export const SearchContext = React.createContext();
 
 function App() {
